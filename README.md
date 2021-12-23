@@ -1,4 +1,4 @@
-# Portal
+# manju.dev
 
 To start your Phoenix server:
 
