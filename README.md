@@ -12,3 +12,5 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ## Production Deployment
 
   Reference: https://hexdocs.pm/phoenix/deployment.html#handling-of-your-application-secrets
+
+  Debian User managmenet: https://medium.com/3-elm-erlang-elixir/how-to-deploying-phoenix-application-on-ubuntu-293645f38145
