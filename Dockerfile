@@ -1,3 +1,4 @@
+################################################################################
 # STEP 1 - Docker image stage for building the release
 ARG MIX_ENV="prod"
 FROM hexpm/elixir:1.14.2-erlang-25.1-alpine-3.17.0  AS build
@@ -43,66 +44,36 @@ COPY config/runtime.exs config/
 # Assemble release
 RUN mix release
 
+################################################################################
 # STEP 2 - Docker image stage for running the release
+FROM alpine:3.17.0 AS app
 
+ARG MIX_ENV
 
-# setup up variables
-# install deps and compile deps
-COPY mix.exs /app/mix.exs
-COPY mix.lock /app/mix.lock
-RUN mix do deps.get --only $MIX_ENV, deps.compile
-RUN mix compile
+# Install runtime dependencies
+RUN apk add --no-cache libstdc++ openssl ncurses-libs
 
-################################################################################
-# STEP 2 - RELEASE BUILDER
-FROM hexpm/elixir:1.14.2-erlang-25.1-alpine-3.17.0  AS release-builder
+ENV USER="manju"
 
-ENV MIX_ENV=prod
-RUN mkdir /app
-WORKDIR /app
+WORKDIR "/home/${USER}/app"
 
-# setup up variables
-ARG APP_NAME
-ARG APP_VSN
+# Create unprivileged user to run the release
+RUN \
+addgroup -g 1000 -S "${USER}" \
+&& adduser \
+-s /bin/sh \
+-u 1000 \
+-G "${USER}" \
+-h "/home/${USER}" \
+-D "${USER}" \
+&& su "${USER}"
 
-# need to install deps again to run mix phx.digest
-RUN apk update && \
-    apk upgrade --no-cache && \
-    apk add --no-cache \
-    git \
-    build-base && \
-    mix local.rebar --force && \
-    mix local.hex --force
+# run as user
+USER "${USER}"
 
-# copy elixir deps
-COPY --from=deps-getter /app /app
+# copy release executable
+COPY --from=build --chown="${USER}":"${USER}" /app/_build/"${MIX_ENV}"/rel/portal ./
 
-# copy config, priv and release directories
-COPY config /app/config
-COPY priv /app/priv
-COPY rel /app/rel
+ENTRYPOINT ["bin/portal"]
 
-RUN mix phx.digest
-
-COPY lib /app/lib
-
-# create release
-RUN mkdir -p /opt/built &&\
-    mix release ${APP_NAME} &&\
-    cp -r _build/prod/rel/${APP_NAME} /opt/built
-
-################################################################################
-
-## STEP 3 - FINAL
-FROM alpine:3.11.3
-
-ENV MIX_ENV=prod
-
-RUN apk update && \
-    apk add --no-cache \
-    bash \
-    openssl-dev
-
-COPY --from=release-builder /opt/built /app
-WORKDIR /app
-CMD ["/app/phxtmpl/bin/phxtmpl", "start"]
+CMD ["start"]

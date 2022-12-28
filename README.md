@@ -21,3 +21,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   docker build -t manju.dev:latest .
 
   ```
+
+## References
+  
+  https://blog.miguelcoba.com/deploying-a-phoenix-16-app-with-docker-and-elixir-releases
