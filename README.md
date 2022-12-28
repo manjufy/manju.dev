@@ -18,7 +18,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ## Dockerize
 
   ```
-  docker build -t manju.dev:latest .
+  docker image build -t manju.dev:latest .
 
   ```
 

@@ -14,7 +14,7 @@ RUN mix local.hex --force && \
     mix local.rebar --force
 
 ARG MIX_ENV
-ENV MIX_ENV="${MIX_ENV}}"
+ENV MIX_ENV="${MIX_ENV}"
 
 COPY mix.exs mix.lock ./
 
@@ -22,7 +22,7 @@ RUN mix deps.get --only $MIX_ENV
 
 # Copy compile configuration files
 RUN mkdir config
-COPY config/config.exs config/$MIX_ENV.exs config/
+COPY config/config.exs config/"${MIX_ENV}".exs config/
 
 # Compile dependencies
 RUN mix deps.compile
