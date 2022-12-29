@@ -49,6 +49,7 @@ RUN mix release
 FROM alpine:3.17.0 AS app
 
 ARG MIX_ENV
+#ENV SECRET_KEY_BASE="$(mix phx.gen.secret)"
 
 # Install runtime dependencies
 RUN apk add --no-cache libstdc++ openssl ncurses-libs
