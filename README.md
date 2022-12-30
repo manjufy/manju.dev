@@ -31,9 +31,11 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   // Release
   $ MIX_ENV=prod mix release
 
-  // Short cut to run it locally. Then access it through http://localhost:4001
+  // Short cut to run it locally.
   $ rm -rf _build && mix deps.get --only prod && MIX_ENV=prod mix compile && MIX_ENV=prod mix assets.deploy && MIX_ENV=prod mix release
   ```
+
+  Then access it through http://localhost:4000 (Port is defined in config/runtime.exs). If 4000 is taken, change to some other port
 
   Reference: https://hexdocs.pm/phoenix/deployment.html#handling-of-your-application-secrets
 
