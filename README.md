@@ -26,7 +26,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   // Release
   $ MIX_ENV=prod mix release
 
-  // Short cut
+  // Short cut to run it locally. Then access it through http://localhost:4001
   $ rm -rf _build && mix deps.get --only prod && MIX_ENV=prod mix compile && MIX_ENV=prod mix assets.deploy && MIX_ENV=prod mix release
   ```
 
@@ -34,13 +34,37 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
   Debian User managmenet: https://medium.com/3-elm-erlang-elixir/how-to-deploying-phoenix-application-on-ubuntu-293645f38145
 
-## Dockerize
+## Dockerize with debian (Dockerfile)
+
+  `Dockerfile` is based on the debian bullseye slim image 
 
   ```
-  docker image build -t manju.dev:latest .
+  docker image build -t elixir/portal .
 
+  docker run -e SECRET_KEY_BASE="$(mix phx.gen.secret)" -p  4001:4000 elixir/portal
+  ```
+
+## Dockerize with alpine (Dockerfile.alpine)
+
+  `Dockerfile.alpine` is based on the debian bullseye slim image 
+
+  ```
+  docker image build -t elixir.alpine/portal . --no-cache -f Dockerfile.alpine
+
+  docker run -e SECRET_KEY_BASE="$(mix phx.gen.secret)" -p  4001:4000  elixir.alpine/portal
+  ```
+
+## Useful commands
+
+  ```
+  // 1. Stop running containers
+  // 2. Remove the container
+  // 3. Remove the image
+  docker stop $(docker ps -a | grep elixir | awk '{print $1}') && docker rm $(docker ps -a | grep elixir | awk '{print $1}')  && docker image rm $(docker images | grep elixir | awk '{print $3}')
   ```
 
 ## References
   
-  https://blog.miguelcoba.com/deploying-a-phoenix-16-app-with-docker-and-elixir-releases
+  Mix Release Reference: https://hexdocs.pm/phoenix/releases.html
+
+  Elixir Release blog: https://blog.miguelcoba.com/deploying-a-phoenix-16-app-with-docker-and-elixir-releases

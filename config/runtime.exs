@@ -21,6 +21,7 @@ if config_env() == :prod do
 
   config :portal, PortalWeb.Endpoint,
     http: [
+      :inet4,
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
@@ -35,7 +36,7 @@ if config_env() == :prod do
   # If you are doing OTP releases, you need to instruct Phoenix
   # to start each relevant endpoint:
   #
-  #     config :portal, PortalWeb.Endpoint, server: true
+       config :portal, PortalWeb.Endpoint, server: true
   #
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.
