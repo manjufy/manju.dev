@@ -60,7 +60,9 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   // 1. Stop running containers
   // 2. Remove the container
   // 3. Remove the image
-  docker stop $(docker ps -a | grep elixir | awk '{print $1}') && docker rm $(docker ps -a | grep elixir | awk '{print $1}')  && docker image rm $(docker images | grep elixir | awk '{print $3}')
+  docker stop $(docker ps -a | grep elixir | awk '{print $1}') \
+  && docker rm $(docker ps -a | grep elixir | awk '{print $1}') \
+  && docker image rm $(docker images | grep elixir | awk '{print $3}')
   ```
 
 ## References
