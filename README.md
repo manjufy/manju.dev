@@ -37,10 +37,6 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
   Then access it through http://localhost:4000 (Port is defined in config/runtime.exs). If 4000 is taken, change to some other port
 
-  Reference: https://hexdocs.pm/phoenix/deployment.html#handling-of-your-application-secrets
-
-  Debian User managmenet: https://medium.com/3-elm-erlang-elixir/how-to-deploying-phoenix-application-on-ubuntu-293645f38145
-
 ## Dockerize with debian (Dockerfile)
 
   `Dockerfile` is based on the debian bullseye slim image 
@@ -77,3 +73,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   Mix Release Reference: https://hexdocs.pm/phoenix/releases.html
 
   Elixir Release blog: https://blog.miguelcoba.com/deploying-a-phoenix-16-app-with-docker-and-elixir-releases
+
+  Handling Secrets: https://hexdocs.pm/phoenix/deployment.html#handling-of-your-application-secrets
+
+  Debian User managmenet: https://medium.com/3-elm-erlang-elixir/how-to-deploying-phoenix-application-on-ubuntu-293645f38145
