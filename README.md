@@ -9,14 +9,19 @@ Now you can visit [`localhost:4001`](http://localhost:4001) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## Production Deployment
+## Production Deployment To run locally
+
+  Following steps describes running the project in prod mode locally
 
   ```
+  // Generate the secret and export before running the rest of the commands
   $ mix phx.gen.secret
   $ export SECRET_KEY_BASE=<KEY>
+  
   // Initial setup
   $ mix deps.get --only prod
   $ MIX_ENV=prod mix compile
+  
   // Compile assets
   $ MIX_ENV=prod mix assets.deploy
   // Run the server
