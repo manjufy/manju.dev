@@ -16,7 +16,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   ```
   // Generate the secret and export before running the rest of the commands
   $ mix phx.gen.secret
-  $ export SECRET_KEY_BASE=<KEY>
+  $ export SECRET_KEY_BASE=<KEY_GENERATED_FROM_PREV_STEP>
   
   // Initial setup
   $ mix deps.get --only prod
